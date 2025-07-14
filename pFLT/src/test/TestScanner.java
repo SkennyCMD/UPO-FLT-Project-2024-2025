@@ -1,11 +1,8 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
-
 import exceptions.LexicalException;
 import scanner.Scanner;
 import token.Token;

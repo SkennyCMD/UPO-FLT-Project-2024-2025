@@ -20,18 +20,14 @@ public class Parser {
 		
 		try {
 			t = sc.peekToken();
-		} catch (LexicalException e) {
-			throw new SyntacticException(e.getMessage());
-		} catch (IOException e) {
+		} catch (LexicalException | IOException e) {
 			throw new SyntacticException(e.getMessage());
 		}
 		
 		if(type.equals(t.getType())) {
 			try {
 				return sc.nextToken();
-			} catch (LexicalException e) {
-				throw new SyntacticException(e.getMessage());
-			} catch (IOException e) {
+			} catch (LexicalException | IOException e) {
 				throw new SyntacticException(e.getMessage());			
 			}
 		}else {
@@ -60,6 +56,7 @@ public class Parser {
 		//Prg -> DSs $
 		if(t.getType() == TokenType.ID || t.getType() == TokenType.PRINT ||t.getType() == TokenType.EOF ||t.getType() == TokenType.TYINT ||t.getType() == TokenType.TYFLOAT) {
 			program = parseDSs();
+			parseDSs();
 			checkNextType(TokenType.EOF);
 		}else {
 			checkNextType(TokenType.SEMI);
@@ -75,7 +72,7 @@ public class Parser {
 		Token t = null;
 		
 		try {
-			t = sc.nextToken();
+			t = sc.peekToken();
 		} catch (LexicalException | IOException e) {
 			throw new SyntacticException(e.getMessage());
 		}
@@ -336,7 +333,7 @@ public class Parser {
 		
 		// Op -> OP_ASSIGN
 		if(t.getType() == TokenType.OP_ASSIGN) {
-			checkNextType(TokenType.ASSIGN);
+			checkNextType(TokenType.OP_ASSIGN);
 			
 			String val = t.getVal();
 			
