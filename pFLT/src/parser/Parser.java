@@ -12,9 +12,19 @@ import scanner.*;
 
 
 public class Parser {
+	/**
+	 * Scanner utilizzato per leggere i token
+	 * @author Matteo Schintu (20051769)
+	 */
 	private Scanner sc;
 	
-	//controlla se il token successivo contiene il tipo specificato, se si lo ritorna (facendo avanzare lo scanner), altrimenti lancia una SyntacticException
+	/**
+	 * Controlla se il token successivo contiene il tipo specificato, se si lo ritorna (facendo avanzare lo scanner), altrimenti lancia una SyntacticException
+	 * @param type il tipo di token atteso
+	 * @return il token successivo se il tipo corrisponde
+	 * @throws SyntacticException se il tipo non corrisponde
+	 * @author Matteo Schintu (20051769)
+	 */
 	private Token checkNextType(TokenType type) throws SyntacticException {
 		Token t=null;
 		
@@ -35,14 +45,31 @@ public class Parser {
 		}
 	}
 	
+	/**
+	 * Costruttore della classe Parser
+	 * @param sc lo scanner da utilizzare per leggere i token
+	 * @author Matteo Schintu (20051769)
+	 */
 	public Parser(Scanner sc){
 		this.sc = sc;
 	}
 	
+	/**
+	 * Metodo che avvia il processo di parsing, richiamando il metodo privato parseProgram
+	 * @return un oggetto NodeProgram che rappresenta il programma parsato
+	 * @throws SyntacticException se si verifica un errore di sintassi durante il parsing
+	 * @author Matteo Schintu (20051769)
+	 */
 	public NodeProgram parse() throws SyntacticException {
 		return parseProgram();
 	}
 	
+	/**
+	 * Metodo privato che effettua il parsing del programma, partendo dalla produzione Prg -> DSs $
+	 * @return un oggetto NodeProgram che rappresenta il programma parsato
+	 * @throws SyntacticException se si verifica un errore di sintassi durante il parsing
+	 * @author Matteo Schintu (20051769)
+	 */
 	private NodeProgram parseProgram() throws SyntacticException {
 		ArrayList<NodeDecSt> program = null;
 		Token t = null;
@@ -67,6 +94,12 @@ public class Parser {
 		return new NodeProgram(program);
 	}
 	
+	/**
+	 * Metodo privato che effettua il parsing partendo dalla produzione DSs -> Dcl DSs | Stm DSs | empty
+	 * @return un ArrayList di NodeDecSt che rappresenta le dichiarazioni e gli statement parsati
+	 * @throws SyntacticException se si verifica un errore di sintassi durante il parsing
+	 * @author Matteo Schintu (20051769)
+	 */
 	private ArrayList<NodeDecSt> parseDSs() throws SyntacticException{
 		ArrayList<NodeDecSt> nodes;
 		Token t = null;
@@ -94,6 +127,12 @@ public class Parser {
 		return nodes;
 	}
 	
+	/**
+	 * Metodo privato che effettua il parsing partendo dalla produzione Dcl -> Ty ID DclP
+	 * @return un oggetto NodeDecl che rappresenta la dichiarazione parsata
+	 * @throws SyntacticException se si verifica un errore di sintassi durante il parsing
+	 * @author Matteo Schintu (20051769)
+	 */
 	private NodeDecl parseDcl() throws SyntacticException {
 		Token t = null;
 		
@@ -124,6 +163,12 @@ public class Parser {
 		throw new SyntacticException("TYINT or TYFLOAT expected, obtained: " + t.getType());
 	}
 	
+	/**
+	 * Metodo privato che effettua il parsing partendo dalla produzione DclP -> = Exp semi | semi
+	 * @return un oggetto NodeExpr che rappresenta l'espressione di inizializzazione della dichiarazione, o null se non c'Ã¨ inizializzazione
+	 * @throws SyntacticException se si verifica un errore di sintassi durante il parsing
+	 * @author Matteo Schintu (20051769)
+	 */
 	private NodeExpr parseDclP() throws SyntacticException {
 		Token t = null;
 		
@@ -151,11 +196,17 @@ public class Parser {
 		
 	}
 	
+	/**
+	 * Metodo privato che effettua il parsing partendo dalla produzione Stm -> print id semi | ID Op Exp semi
+	 * @return un oggetto NodeStm che rappresenta lo statement parsato
+	 * @throws SyntacticException se si verifica un errore di sintassi durante il parsing
+	 * @author Matteo Schintu (20051769)
+	 */
 	private NodeStm parseStm() throws SyntacticException {
 		Token t = null;
 		
 		try {
-			t = sc.peekToken(); //il token non è stato rimosso dalla coda, peekToken() non lo rimuove
+			t = sc.peekToken(); //il token non ï¿½ stato rimosso dalla coda, peekToken() non lo rimuove
 		} catch (LexicalException | IOException e) {
 			e.printStackTrace();
 		}
@@ -189,11 +240,17 @@ public class Parser {
 		throw new SyntacticException("ID or PRINT expected, obtained: " + t.getType());
 	}
 	
+	/**
+	 * Metodo privato che effettua il parsing partendo dalla produzione Exp -> Tr ExpP
+	 * @return un oggetto NodeExpr che rappresenta l'espressione parsata
+	 * @throws SyntacticException se si verifica un errore di sintassi durante il parsing
+	 * @author Matteo Schintu (20051769)
+	 */
 	private NodeExpr parseExp() throws SyntacticException {
 		Token t = null;
 		
 		try {
-			t = sc.peekToken(); //il token non è stato rimosso dalla coda, peekToken() non lo rimuove
+			t = sc.peekToken(); //il token non ï¿½ stato rimosso dalla coda, peekToken() non lo rimuove
 		} catch (LexicalException | IOException e) {
 			e.printStackTrace();
 		}
@@ -207,11 +264,18 @@ public class Parser {
 		throw new SyntacticException("ID, INT or FLOAT expected, obtained: " + t.getType());
 	}
 	
+	/**
+	 * Metodo privato che effettua il parsing partendo dalla produzione ExpP -> + Tr ExpP | - Tr ExpP | ;
+	 * @param left l'espressione a sinistra dell'operatore
+	 * @return un oggetto NodeExpr che rappresenta l'espressione parsata
+	 * @throws SyntacticException se si verifica un errore di sintassi durante il parsing
+	 * @author Matteo Schintu (20051769)
+	 */
 	private NodeExpr parseExpP(NodeExpr left) throws SyntacticException {
 		Token t = null;
 		
 		try {
-			t = sc.peekToken(); //il token non è stato rimosso dalla coda, peekToken() non lo rimuove
+			t = sc.peekToken(); //il token non ï¿½ stato rimosso dalla coda, peekToken() non lo rimuove
 		} catch (LexicalException | IOException e) {
 			e.printStackTrace();
 		}
@@ -242,7 +306,7 @@ public class Parser {
 		Token t = null;
 		
 		try {
-			t = sc.peekToken(); //il token non è stato rimosso dalla coda, peekToken() non lo rimuove
+			t = sc.peekToken(); //il token non ï¿½ stato rimosso dalla coda, peekToken() non lo rimuove
 		} catch (LexicalException | IOException e) {
 			e.printStackTrace();
 		}
@@ -256,11 +320,18 @@ public class Parser {
 		throw new SyntacticException("ID, INT or FLOAT expected, obtained: " + t.getType());
 	}
 	
+	/**
+	 * Metodo privato che effettua il parsing partendo dalla produzione Trp -> + Val Trp | / Val Trp | empty
+	 * @param left l'espressione a sinistra dell'operatore
+	 * @return un oggetto NodeExpr che rappresenta l'espressione parsata
+	 * @throws SyntacticException se si verifica un errore di sintassi durante il parsing
+	 * @author Matteo Schintu (20051769)
+	 */
 	private NodeExpr parseTrP(NodeExpr left) throws SyntacticException {
 		Token t = null;
 		
 		try {
-			t = sc.peekToken(); //il token non è stato rimosso dalla coda, peekToken() non lo rimuove
+			t = sc.peekToken(); //il token non ï¿½ stato rimosso dalla coda, peekToken() non lo rimuove
 		} catch (LexicalException | IOException e) {
 			e.printStackTrace();
 		}
@@ -287,11 +358,17 @@ public class Parser {
 		throw new SyntacticException("TIMES, DIVIDE, PLUS, MINUS or SEMI expected, obtained: " + t.getType());
 	}
 	
+	/**
+	 * Metodo privato che effettua il parsing partendo dalla produzione Val -> int | float | id
+	 * @return un oggetto NodeExpr che rappresenta il valore parsato
+	 * @throws SyntacticException se si verifica un errore di sintassi durante il parsing
+	 * @author Matteo Schintu (20051769)
+	 */
 	private NodeExpr parseVal() throws SyntacticException {
 		Token t = null;
 		
 		try {
-			t = sc.peekToken(); //il token non è stato rimosso dalla coda, peekToken() non lo rimuove
+			t = sc.peekToken(); //il token non ï¿½ stato rimosso dalla coda, peekToken() non lo rimuove
 		} catch (LexicalException | IOException e) {
 			e.printStackTrace();
 		}
@@ -316,11 +393,17 @@ public class Parser {
 		throw new SyntacticException("INT, FLOAT or ID expected, obtained: " + t.getType());
 	}
 	
+	/**
+	 * Metodo privato che effettua il parsing partendo dalla produzione Op -> ASSIGN | OP_ASSIGN
+	 * @return un oggetto LangOper che rappresenta l'operatore parsato
+	 * @throws SyntacticException se si verifica un errore di sintassi durante il parsing
+	 * @author Matteo Schintu (20051769)
+	 */
 	private LangOper parseOp() throws SyntacticException {
 		Token t = null;
 		
 		try {
-			t = sc.peekToken(); //il token non è stato rimosso dalla coda, peekToken() non lo rimuove
+			t = sc.peekToken(); //il token non ï¿½ stato rimosso dalla coda, peekToken() non lo rimuove
 		} catch (LexicalException | IOException e) {
 			e.printStackTrace();
 		}
