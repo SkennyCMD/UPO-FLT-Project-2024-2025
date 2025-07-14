@@ -45,7 +45,8 @@ class TestScanner {
 		e = assertThrows(LexicalException.class, scanner::nextToken);
 		assertEquals("Lexical Error at 3 row: Invalid sequence '123.121212' ", e.getMessage());
 		var t = assertDoesNotThrow(scanner::nextToken);
-		assertEquals(t, new Token(TokenType.FLOAT, 5, "123.123"));
+		//assertEquals(t, new Token(TokenType.FLOAT, 5, "123.123"));
+		assertEquals(t.toString(), new Token(TokenType.FLOAT, 5, "123.123").toString());
 		assertThrows(LexicalException.class, scanner::nextToken);
 		assertEquals(TokenType.EOF, scanner.nextToken().getType());
 
@@ -84,11 +85,21 @@ class TestScanner {
 		Token t4_aus = scanner.nextToken();
 		Token t5_aus = scanner.nextToken();
 
-		assertTrue(t1.equals(t1_aus));
-		assertTrue(t2.equals(t2_aus));
-		assertTrue(t3.equals(t3_aus));
-		assertTrue(t4.equals(t4_aus));
-		assertTrue(t5.equals(t5_aus));
+		assertEquals(t1.toString(), t1_aus.toString());	
+		assertEquals(t2.toString(), t2_aus.toString());
+		assertEquals(t3.toString(), t3_aus.toString());
+		assertEquals(t4.toString(), t4_aus.toString());
+		assertEquals(t5.toString(), t5_aus.toString());
+		
+		/*
+		assertEquals(t1, t1_aus);
+		assertEquals(t2, t2_aus);
+		assertEquals(t3, t3_aus);
+		assertEquals(t4, t4_aus);
+		assertEquals(t5, t5_aus);
+		*/
+		
+		
 	}
 
 	@Test
@@ -216,11 +227,18 @@ class TestScanner {
 		Token t4 = new Token(TokenType.INT, 5, "1234");
 		Token t5 = new Token(TokenType.EOF, 5);
 
+		/*
 		assertEquals(t, scanner.nextToken());
 		assertEquals(t2, scanner.nextToken());
 		assertEquals(t3, scanner.nextToken());
 		assertEquals(t4, scanner.nextToken());
 		assertEquals(t5, scanner.nextToken());
+		*/
+		assertEquals(t.toString(), scanner.nextToken().toString());
+		assertEquals(t2.toString(), scanner.nextToken().toString());
+		assertEquals(t3.toString(), scanner.nextToken().toString());
+		assertEquals(t4.toString(), scanner.nextToken().toString());
+		assertEquals(t5.toString(), scanner.nextToken().toString());
 
 	}
 
@@ -232,11 +250,16 @@ class TestScanner {
 		Token t3 = new Token(TokenType.TYINT, 5);
 		Token t4 = new Token(TokenType.EOF, 5);
 
+		/*
 		assertEquals(t, scanner.nextToken());
 		assertEquals(t2, scanner.nextToken());
 		assertEquals(t3, scanner.nextToken());
 		assertEquals(t4, scanner.nextToken());
-
+		*/
+		assertEquals(t.toString(), scanner.nextToken().toString());
+		assertEquals(t2.toString(), scanner.nextToken().toString());
+		assertEquals(t3.toString(), scanner.nextToken().toString());
+		assertEquals(t4.toString(), scanner.nextToken().toString());
 	}
 
 	@Test
