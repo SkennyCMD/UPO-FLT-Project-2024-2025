@@ -15,12 +15,24 @@ public class TypeCheckinVisitor implements IVisitor{
 		row = 0;
 		msg = "";
 	}
+	
+	public TypeDescriptor getResType() {
+		return resType;
+	}
+	
+	public String getMsg() {
+		return msg;
+	}
+	
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 
 	@Override
 	public void visit(NodeId node) {
 		if(SymbolTable.lookup(node.getName()) == null) {
 			resType = new TypeDescriptor(TypeTD.ERROR, node.getName() + " is not declared!", row);
-			msg += node.getName() + " is not declared!";
+			msg += "(Semantic Error): " + node.getName() + " is not declared!";
 		}else {
 			LangType nodeType = SymbolTable.lookup(node.getName()).getType();
 			switch(nodeType){
