@@ -92,10 +92,10 @@ public class CodeGeneratorVisitor implements IVisitor{
 				code = left + " " + right + " -";
 				break;
 			case TIMES:
-				code = left + " " + right + " /";
+				code = left + " " + right + " *";
 				break;
 			case DIV:
-				code = left + " " + right + " *";
+				code = left + " " + right + " /";
 				break;
 			case DIV_FLOAT:
 				code = left + " " + right + " 5 k / 0 k";
@@ -126,7 +126,7 @@ public class CodeGeneratorVisitor implements IVisitor{
 			node.getId().accept(this);
 			String id = code;
 			
-			code += init + " s" + id;
+			code +=  init + " s" + id;
 		}
 	}
 
@@ -143,6 +143,7 @@ public class CodeGeneratorVisitor implements IVisitor{
 
 	@Override
 	public void visit(NodePrint node) {
+		node.getId().accept(this);
 		code = "l" + code + " p P";
 	}
 
