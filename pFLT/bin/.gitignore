@@ -1,1 +1,8 @@
 /parser/
+/test/
+/ast/
+/exceptions/
+/scanner/
+/symbolTable/
+/token/
+/visitor/
