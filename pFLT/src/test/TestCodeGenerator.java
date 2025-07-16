@@ -22,10 +22,8 @@ public class TestCodeGenerator {
 		NodeProgram nP = new Parser(new Scanner("src/test/TestFiles/codeGenerator/1_assign.txt")).parse();
 		var tcVisit = new TypeCheckinVisitor();
 		nP.accept(tcVisit);
-		System.out.println(tcVisit);
 		var cgVisit = new CodeGeneratorVisitor();
 		nP.accept(cgVisit);
-		System.out.println(cgVisit);
 		
 		assertEquals(cgVisit.getMsg(), "");
 		assertEquals(cgVisit.getGenerated(), "1 6 / sa la p P");

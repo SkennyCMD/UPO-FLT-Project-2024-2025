@@ -209,7 +209,7 @@ class TestScanner {
 
 	@Test
 	void testINT() throws LexicalException, IOException {
-		Scanner scanner = new Scanner("src/test/TestFiles/scanner/testint.txt");
+		Scanner scanner = new Scanner("src/test/TestFiles/scanner/testInt.txt");
 
 		assertEquals("0050", scanner.nextToken().getVal());
 		assertEquals("698", scanner.nextToken().getVal());
@@ -220,7 +220,7 @@ class TestScanner {
 
 	@Test
 	void testINTToken() throws LexicalException, IOException {
-		Scanner scanner = new Scanner("src/test/TestFiles/scanner/testint.txt");
+		Scanner scanner = new Scanner("src/test/TestFiles/scanner/testInt.txt");
 		Token t = new Token(TokenType.INT, 1, "0050");
 		Token t2 = new Token(TokenType.INT, 2, "698");
 		Token t3 = new Token(TokenType.INT, 4, "560099");
@@ -244,7 +244,7 @@ class TestScanner {
 
 	@Test
 	void testKeyWords() throws LexicalException, IOException {
-		Scanner scanner = new Scanner("src/test/TestFiles/scanner/testKeyWords.txt");
+		Scanner scanner = new Scanner("src/test/TestFiles/scanner/testKeywords.txt");
 		Token t = new Token(TokenType.PRINT, 2);
 		Token t2 = new Token(TokenType.TYFLOAT, 2);
 		Token t3 = new Token(TokenType.TYINT, 5);

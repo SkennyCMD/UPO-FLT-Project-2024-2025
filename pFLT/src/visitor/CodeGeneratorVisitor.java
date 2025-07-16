@@ -43,7 +43,6 @@ public class CodeGeneratorVisitor implements IVisitor{
 
 	@Override
 	public void visit(NodeId node) {
-		System.out.println("debug " + node.getName());
 		code = "" + SymbolTable.lookup(node.getName()).getRegister();
 	}
 
