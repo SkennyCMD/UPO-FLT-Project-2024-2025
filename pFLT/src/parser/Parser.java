@@ -83,7 +83,7 @@ public class Parser {
 		//Prg -> DSs $
 		if(t.getType() == TokenType.ID || t.getType() == TokenType.PRINT ||t.getType() == TokenType.EOF ||t.getType() == TokenType.TYINT ||t.getType() == TokenType.TYFLOAT) {
 			program = parseDSs();
-			parseDSs();
+			//parseDSs();
 			checkNextType(TokenType.EOF);
 		}else {
 			checkNextType(TokenType.SEMI);
@@ -144,6 +144,7 @@ public class Parser {
 		
 		// Ty -> tyfloat
 		if(t.getType() == TokenType.TYFLOAT) {
+			//Ty ID DclP 
 			checkNextType(TokenType.TYFLOAT);
 			LangType type = LangType.FLOAT;
 			NodeId id = new NodeId(checkNextType(TokenType.ID).getVal());

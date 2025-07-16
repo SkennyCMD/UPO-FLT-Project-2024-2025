@@ -22,11 +22,13 @@ public class TestCodeGenerator {
 		NodeProgram nP = new Parser(new Scanner("src/test/TestFiles/codeGenerator/1_assign.txt")).parse();
 		var tcVisit = new TypeCheckinVisitor();
 		nP.accept(tcVisit);
+		System.out.println(tcVisit);
 		var cgVisit = new CodeGeneratorVisitor();
 		nP.accept(cgVisit);
+		System.out.println(cgVisit);
 		
 		assertEquals(cgVisit.getMsg(), "");
-		assertEquals(cgVisit.getGenerated(), "a1 6 / sa la p P ");
+		assertEquals(cgVisit.getGenerated(), "1 6 / sa la p P");
 	}
 	
 	@Test
@@ -39,7 +41,7 @@ public class TestCodeGenerator {
 		
 		
 		assertEquals(cgVisit.getMsg(), "");
-		assertEquals(cgVisit.getGenerated(), "a0 sa la 1 + sa b6 sb 1.0 6 5 k / 0 k la lb / + sc la p P lb p P lc p P ");
+		assertEquals(cgVisit.getGenerated(), "0 sa la 1 + sa 6 sb 1.0 6 5 k / 0 k la lb / + sc la p P lb p P lc p P");
 	}
 	
 	@Test
@@ -51,7 +53,7 @@ public class TestCodeGenerator {
 		nP.accept(cgVisit);
 		
 		assertEquals(cgVisit.getMsg(), "");
-		assertEquals(cgVisit.getGenerated(), "5 3 + sa la 0.5 5 k / 0 k sb la p P lb 4 5 k / 0 k sb lb p P lb 1 - sc lc lb 5 k / 0 k sc lc p P ");
+		assertEquals(cgVisit.getGenerated(), "5 3 + sa la 0.5 5 k / 0 k sb la p P lb 4 5 k / 0 k sb lb p P lb 1 - sc lc lb 5 k / 0 k sc lc p P");
 	}
 	
 	@Test

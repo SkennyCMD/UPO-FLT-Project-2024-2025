@@ -22,7 +22,7 @@ public class CodeGeneratorVisitor implements IVisitor{
 	}
 	
 	public String getGenerated() {
-		return generated;
+		return generated.strip();
 	}
 	
 	public String getMsg() {
@@ -43,6 +43,7 @@ public class CodeGeneratorVisitor implements IVisitor{
 
 	@Override
 	public void visit(NodeId node) {
+		System.out.println("debug " + node.getName());
 		code = "" + SymbolTable.lookup(node.getName()).getRegister();
 	}
 
@@ -126,7 +127,7 @@ public class CodeGeneratorVisitor implements IVisitor{
 			node.getId().accept(this);
 			String id = code;
 			
-			code +=  init + " s" + id;
+			code =  init + " s" + id;
 		}
 	}
 
